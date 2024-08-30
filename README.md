@@ -1,17 +1,20 @@
-$ dotnet new console -o HelloWorld --use-program-main true
+# CIDM-2315-01 - C#
 
-    *--use-program-main true //use everytime when creating a new console
+- Project files created and used during CIDM-2315-01 course for Programming business applications using C# and .NET
 
-    what is the -o for?
+## Creating a Project section
 
+To create a new console application, use the following command:
 
-//** used to create a new C# with .net
-dotnet new console -o Week1 --use-program-main true
+```bash
+dotnet new console -o [file-name] --use-program-main true
+```
 
-*** run program file use 
+## Run the project application
+
+To run console application, navigate to file directory and use the following command:
+
+```bash
+cd [file directory]
 dotnet run
-
-/**
-
-
-*/
+```
