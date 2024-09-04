@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "C:\\CIDM2315\\CIDM231501Fall24\\Classwork\\Week1\\Week1.csproj": {}
+    "C:\\Users\\jt1138193\\Desktop\\CIDM2315\\Classwork\\Week1\\Week1.csproj": {}
   },
   "projects": {
-    "C:\\CIDM2315\\CIDM231501Fall24\\Classwork\\Week1\\Week1.csproj": {
+    "C:\\Users\\jt1138193\\Desktop\\CIDM2315\\Classwork\\Week1\\Week1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\CIDM2315\\CIDM231501Fall24\\Classwork\\Week1\\Week1.csproj",
+        "projectUniqueName": "C:\\Users\\jt1138193\\Desktop\\CIDM2315\\Classwork\\Week1\\Week1.csproj",
         "projectName": "Week1",
-        "projectPath": "C:\\CIDM2315\\CIDM231501Fall24\\Classwork\\Week1\\Week1.csproj",
-        "packagesPath": "C:\\Users\\torre\\.nuget\\packages\\",
-        "outputPath": "C:\\CIDM2315\\CIDM231501Fall24\\Classwork\\Week1\\obj\\",
+        "projectPath": "C:\\Users\\jt1138193\\Desktop\\CIDM2315\\Classwork\\Week1\\Week1.csproj",
+        "packagesPath": "C:\\Users\\jt1138193\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jt1138193\\Desktop\\CIDM2315\\Classwork\\Week1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\torre\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\jt1138193\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -58,7 +60,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
