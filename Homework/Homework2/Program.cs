@@ -7,11 +7,10 @@ class Program
 
         //Code for Q1
         Console.WriteLine("Grade Letter GPA Point Converter");
-        Console.WriteLine("Please input a letter grade: ");
 
+        Console.WriteLine("Please input a letter grade: ");
         // ? is used to satisfy the nullable reference exception errors
         string? grade = Console.ReadLine()?.ToUpper(); // To upper is used to convert the input to uppercase to account for lower case inputs
-
 
         switch (grade)
         {
@@ -34,7 +33,6 @@ class Program
                 Console.WriteLine("Wrong Letter Grade");
                 break;
         }
-
 
         // //Code for Q2
         Console.WriteLine("Small Number Input Finder");
@@ -67,8 +65,6 @@ class Program
             Console.WriteLine("There are two or more numbers that are the smallest");
         }
 
-
-
         //Code for BQ
         Console.WriteLine("Leap Year Checker");
 
@@ -76,7 +72,6 @@ class Program
         int year = Convert.ToInt16(Console.ReadLine());
 
         // Leap years are any year that can be % by 4, but cannot be % by 100 unless it can be % by 400
-
         if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0)
         {
             Console.WriteLine($"{year} is a leap year");
@@ -85,10 +80,5 @@ class Program
         {
             Console.WriteLine($"{year} is not a leap year ");
         }
-
-
-
-
-
     }
 }
