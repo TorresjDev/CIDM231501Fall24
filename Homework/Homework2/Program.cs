@@ -5,7 +5,7 @@ class Program
     static void Main(string[] args)
     {
 
-        //Code for Q1
+        //* Code for Q1
         Console.WriteLine("Grade Letter GPA Point Converter");
 
         Console.WriteLine("Please input a letter grade: ");
@@ -34,7 +34,7 @@ class Program
                 break;
         }
 
-        // //Code for Q2
+        //* Code for Q2
         Console.WriteLine("Small Number Input Finder");
 
         Console.WriteLine("Please input the first number: ");
@@ -46,7 +46,7 @@ class Program
         int num2_Int = Convert.ToInt16(num2);
 
         Console.WriteLine("Please input the third number: ");
-        int num3_Int = Convert.ToInt16(Console.ReadLine());
+        int num3_Int = Convert.ToInt16(Console.ReadLine()); // Can be converted directly without requiring a separate variable
 
         if (num1_Int < num2_Int && num1_Int < num3_Int)
         {
@@ -65,7 +65,7 @@ class Program
             Console.WriteLine("There are two or more numbers that are the smallest");
         }
 
-        //Code for BQ
+        //* Code for BQ
         Console.WriteLine("Leap Year Checker");
 
         Console.WriteLine("Please input a year: ");
