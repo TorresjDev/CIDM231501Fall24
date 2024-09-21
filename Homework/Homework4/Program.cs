@@ -14,14 +14,13 @@ class Program
         int numB = Convert.ToInt16(Console.ReadLine());
         largestNumber(numA, numB);
 
-
         // Call Q2 Method
         Console.WriteLine("Q2: Pattern method");
         Console.WriteLine("Enter a number: ");
         int numQ2 = Convert.ToInt16(Console.ReadLine());
         Console.WriteLine("Enter text left or right: ");
         string? shape = Console.ReadLine();
-        PrintShaper(numQ2, shape);
+        PrintShaper(numQ2, shape?.ToLower());
         Console.WriteLine();
 
     }
@@ -39,20 +38,16 @@ class Program
 
         for (int i = 1; i <= num; i++)
         {
-
-            if (shape?.ToLower() == "left")
+            if (shape == "right")
             {
-
                 for (int j = 1; j <= i; j++)
                 {
                     Console.Write("*");
                 }
                 Console.WriteLine();
             }
-
-            else if (shape?.ToLower() == "right")
+            else if (shape == "left")
             {
-
                 for (int j = 1; j <= num - i; j++)
                 {
                     Console.Write(" ");
@@ -68,7 +63,10 @@ class Program
                 Console.WriteLine("Invalid shape input, Please enter 'left' or 'right'.");
                 break;
             }
+            // ! Question
+            // ? Why does string? and shape? require a null check but not the int and num when running the code?
         }
-
     }
 }
+
+
