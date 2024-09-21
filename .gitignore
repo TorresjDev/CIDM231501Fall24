@@ -35,3 +35,5 @@ project.nuget.cache
 *.exe
 *.cache
 *.config
+
+.fake
