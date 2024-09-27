@@ -50,10 +50,12 @@ class Program
         int birthYr = Convert.ToInt16(Console.ReadLine());
         bool isOfAge = checkAge(birthYr);
 
+        // terminal keeps to warning null check only on string value data type and not int nor bool?
+
         if (isOfAge)
         {
             while (password != password2)
-            {
+            { //condition will keep running until the passwords match
                 Console.WriteLine("Passwords do not match, please re-enter your passwords");
                 password = Console.ReadLine();
                 password2 = Console.ReadLine();
