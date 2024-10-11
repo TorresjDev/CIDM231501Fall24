@@ -4,6 +4,12 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        // Q1: C# Class Implementation
+        Professor profAlice = new Professor();
+
+
+
     }
+
+
 }
