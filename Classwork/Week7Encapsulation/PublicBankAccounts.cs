@@ -20,6 +20,3 @@ class PrivateBankAccount
 }
 
 
-// * Encapsulation means:
-//  - Combining data and methods that operate on that data into a single class
-// - Restricting access to inner components of the class (access control)
