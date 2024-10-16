@@ -64,7 +64,7 @@ class Professor
 {
     public string? profName;
     public string? classTeach;
-    private double salary;
+    private double salary; //example of encapsulation - private field with public methods to access it 
     public void SetSalary(double salary_amount)
     {
         salary = salary_amount;
