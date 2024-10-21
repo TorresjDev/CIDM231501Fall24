@@ -4,7 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        Console.WriteLine("Homework 7!");
         Customer Alice = new Customer(110, "Alice", 28);
         Customer Bob = new Customer(111, "Bob", 30);
         Alice.PrintCusInfo();
