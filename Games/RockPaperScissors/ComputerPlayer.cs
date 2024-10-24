@@ -4,7 +4,6 @@ class ComputerPlayer
    {
       Random rdm = new Random();
       int rnd_num = rdm.Next(0, 3);
-      Console.WriteLine(rnd_num);
       switch (rnd_num)
       {
          case 0:

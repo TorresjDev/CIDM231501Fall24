@@ -8,23 +8,22 @@ class HumanPlayer
 
    public int GetPoints()
    {
-      return this.points;
+      return points;
    }
    public void WinRound()
    {
-      this.points += 5;
+      points += 5;
    }
 
    public void LoseRound()
    {
-      this.points -= 5;
+      points -= 5;
    }
 
    public string HumanDecision()
    {
-      string? humanMove = string.Empty;
       Console.WriteLine("Please input your choice: rock, paper, or scissors:");
-      humanMove = Console.ReadLine();
-      return humanMove;
+      string humanMove = Console.ReadLine() ?? string.Empty;
+      return humanMove.ToLower();
    }
 }
