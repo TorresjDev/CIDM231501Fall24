@@ -41,23 +41,42 @@ class Program
         // 2D array: [,] is the syntax to declare a 2D array, new int[3, 3] is the size of the 2D array 
         int[,] two_d_array = new int[3, 3] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
 
-        int[,] arr1 = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
-        // for loop to iterate through the 2D array
+        int[,] arr1 = { { 1, 2, 3, 4 }, { 4, 5, 6, 8 }, { 7, 8, 9, 1 } };
+
+        PrintLoopArray(arr1);
+
+        // jagged array: is an array of arrays
+
+        int[][] jagged_array = new int[][] {
+            new int[] { 1, 2, 3, 4 },
+            new int[] { 5, 6, 7 },
+        }
+
+
+
+    }
+
+    static void PrintLoopArray(int[,] arr_2d)
+    {
+        foreach (int val in arr_2d)
+        {
+            if (val % 2 == 0)
+            {
+                Console.Write(val + " ");
+            }
+        }
+        Console.WriteLine("\n-----------------------------------\n");
         for (int row = 0; row < 3; row++)
         {
             for (int col = 0; col < 3; col++)
             {
-                Console.Write(arr1[row, col] + " ");
+                if (arr_2d[row, col] % 2 == 0)
+                {
+                    Console.Write(arr_2d[row, col] + " ");
+                }
             }
-            Console.WriteLine();
+            // Console.WriteLine();
         }
-        // foreach loop to iterate through the 2D array
-        foreach (int val in arr1)
-        {
-            Console.Write(num + " ");
-        }
-
-
 
     }
 }
