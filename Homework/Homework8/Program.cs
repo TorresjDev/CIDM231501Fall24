@@ -5,7 +5,6 @@ class Program
     static void Main(string[] args)
     {
         Console.WriteLine("Homework 8");
-
         // call Q0 Class 
         Customer cus1 = new Customer("Alice", 33, "Amarillo", 198.5);
         Customer cus2 = new Customer("Bob", 23, "Amarillo", 226);
@@ -98,5 +97,4 @@ class Customer
         this.customerCity = customerCity;
         this.customerCredit = customerCredit;
     }
-
 }

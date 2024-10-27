@@ -63,8 +63,8 @@ class Program
                 "fun"};
 
         Console.WriteLine("Enter a word to search for: ");
-        string letter = Console.ReadLine() ?? string.Empty;
 
+        string letter = Console.ReadLine() ?? string.Empty;
         int count = 0;
 
         foreach (string word in words)
