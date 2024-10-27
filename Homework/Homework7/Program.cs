@@ -30,7 +30,7 @@ class Customer
     }
     public void ChangeID(int new_id)
     {
-        this.cus_id = new_id;
+        cus_id = new_id;
     }
     public void PrintCusInfo()
     {
@@ -38,13 +38,13 @@ class Customer
     }
     public void CompareAge(Customer objCustomer)
     {
-        if (this.cus_age > objCustomer.cus_age)
+        if (cus_age > objCustomer.cus_age)
         {
-            Console.WriteLine($"{this.cus_name} is older than {objCustomer.cus_name}");
+            Console.WriteLine($"{cus_name} is older than {objCustomer.cus_name}");
         }
         else
         {
-            Console.WriteLine($"{objCustomer.cus_name} is older than {this.cus_name}");
+            Console.WriteLine($"{objCustomer.cus_name} is older than {cus_name}");
         }
     }
 }
