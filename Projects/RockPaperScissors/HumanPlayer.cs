@@ -23,7 +23,7 @@ class HumanPlayer
    public string HumanDecision()
    {
       Console.WriteLine("Please input your choice: rock, paper, or scissors:");
-      string humanMove = Console.ReadLine() ?? string.Empty;
+      string humanMove = Console.ReadLine() ?? string.Empty; // using null coalescing operator to satisfy  null reference exception
       return humanMove.ToLower();
    }
 }
