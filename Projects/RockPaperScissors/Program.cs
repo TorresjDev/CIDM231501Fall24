@@ -13,7 +13,7 @@ while (player_human.GetPoints() > 0)
         player_human.WinRound();
         Console.WriteLine($"Your Decision: {human_move}\nComputer Decision: {computer_move}\nYou Win!");
     }
-    else if ((computer_move == "rock" && human_move == "scissors") || (computer_move == "scissors" && human_move == "paper") || (computer_move == "paper" && human_move == "rock"))
+    else if ((computer_move == "rock" && human_move == "scissors") || (computer_move == "scissors" && human_move == "paper") || (computer_move == "paper" && human_move == "rock") || (computer_move == "lava rocks!"))
     {
         player_human.LoseRound();
         Console.WriteLine($"Your Decision: {human_move}\nComputer Decision: {computer_move}\nYou Lose!");
