@@ -73,7 +73,7 @@ class Program
         }
         if (canyonNames != string.Empty)
         {
-            canyonNames = canyonNames.TrimEnd(',', ' ');
+            canyonNames = canyonNames.TrimEnd(',', ' '); //using built-in string method to remove the last comma and space from variable
             Console.WriteLine($"Customers who live in Canyon and over 30 years old: {canyonNames}.");
         }
         else
