@@ -15,8 +15,8 @@ class Program
             new int[] { 7, 8, 9 }
         };
 
-        string[] name = { "Alice", "Bob", "Cathy", "Tom", "Jack" };
-        string[] car = { "Toyota", "Honda", "Ford", "Chevy", "BMW" };
+        string[] array_name = { "Alice", "Bob", "Cathy", "Tom", "Jack" };
+        string[] array_car = { "Toyota", "Honda", "Ford", "Chevy", "BMW" };
 
         Console.WriteLine("***Array Length Property!***");
         // Length property: returns the number of elements in the array
@@ -28,15 +28,15 @@ class Program
 
         Console.WriteLine("\n***Array Sort Property!***");
         // Sort property: sorts the elements in the array
-        ArraySort(int_1D_array, name);
+        ArraySort(int_1D_array, array_name);
 
         Console.WriteLine("\n***Array IndexOf!***");
         // IndexOf property: returns the index of the first occurrence of a value in the array
-        Console.WriteLine($"The index of Ford in car array is {Array.IndexOf(car, "Ford")}");
+        Console.WriteLine($"The index of Ford in car array is {Array.IndexOf(array_car, "Ford")}");
 
         Console.WriteLine("\n***GetLength Property!***");
         // GetLength property: returns the number of elements in the specified dimension of the array
-        Console.WriteLine($"The length of car array is {car.GetLength(0)}");
+        Console.WriteLine($"The length of car array is {array_car.GetLength(0)}");
         Console.WriteLine($"The number of rows in int_2D_array is {int_2D_array.GetLength(0)}");
         Console.WriteLine($"The number of columns in int_2D_array is {int_2D_array.GetLength(1)}");
         for (int idx = 0; idx < int_2D_array.GetLength(0); idx++)
@@ -77,8 +77,50 @@ class Program
         bool contains = str.Contains("char");
         Console.WriteLine($"Does str contain \"char\"? {contains}");
 
+        // ! Week 10 Part II
+        //  List and Dictionary
+        // List: is a collection of values that can be of different data types 
+
+        Console.WriteLine("***Collection/Data Structure: List***");
+
+        // Empty List of string type with values added after initialization
+        List<string> name_list = new List<string>();
+        name_list.Add("Alice");
+        name_list.Add("Bob");
+        name_list.Add("Cathy");
+        name_list.Add("David");
+        name_list.Add(null); // List can contain null values
+        // name_list.Add(4); // List can contain different data types
+
+        foreach (string name in name_list)
+        {
+            Console.WriteLine(name);
+        }
+
+        // List with values added during initialization
+        List<string> car_list = new List<string>() { "Toyota", "Honda", "Ford", "Chevy", "BMW" };
+        foreach (string car in car_list)
+        {
+            Console.WriteLine(car);
+        }
+
+        //? List Methods
+        // List.Count: returns the number of elements in the list
+        Console.WriteLine($"List: car_list has a count of: {car_list.Count} elements");
+        // List.Add(value): adds a value to the end of the list
+        car_list.Add("Audi");
+        // List.Insert(index, value): inserts a value into the list at the specified index
+        car_list.Insert(0, "Tesla");
+        // List.Remove(value): removes the first occurrence of a specified value from the list
+        car_list.Remove("BMW");
+        //  List.IndexOf(value): returns the index of the first occurrence of a value in the list
+        Console.WriteLine($"The index of \"Ford\" in car_list is {car_list.IndexOf("Ford")}");
+        // List.Sort(): sorts the elements in the list
+        car_list.Sort();
+
     }
 
+    // ! Week 10 Part I - Methods
     //* Array Length Property Method
     static void ArrayLength(int[] int_id_array, int[,] int_2D_array, int[][] int_jagged_array)
     {
@@ -139,4 +181,8 @@ class Program
         Console.WriteLine($"Average value of array: {arr.Average()}");
         Console.WriteLine($"Sum value of array: {arr.Sum()}");
     }
+
+    // ! Week 10 Part II - Methods
+
+
 }
