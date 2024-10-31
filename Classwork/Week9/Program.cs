@@ -38,16 +38,17 @@ class Program
         }
 
         Console.WriteLine("Week 9 Arrays Part II");
+
+        Console.WriteLine("2D Array");
         // 2D array: [,] is the syntax to declare a 2D array, new int[3, 3] is the size of the 2D array 
         // 2D array is a matrix, arr1 is a 3x3 matrix meaning it has 3 rows and 3 columns
         int[,] two_d_array = new int[3, 3] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
 
         int[,] arr1 = { { 1, 2, 3, 4 }, { 4, 5, 6, 8 }, { 7, 8, 9, 1 } };
-        Console.WriteLine("2D Array");
         PrintLoopArray(arr1);
 
-        // jagged array: is an array of arrays
         Console.WriteLine("Jagged Array");
+        // jagged array: is an array of arrays
         int[][] jagged_array = new int[][] {
             new int[] { 1, 2, 3, 4 },
             new int[] { 5, 6 },
@@ -65,9 +66,6 @@ class Program
             }
             Console.WriteLine();
         }
-
-
-
     }
 
     static void PrintLoopArray(int[,] arr_2d)
@@ -89,7 +87,6 @@ class Program
                     Console.Write(arr_2d[row, col] + " ");
                 }
             }
-            // Console.WriteLine();
         }
 
     }
