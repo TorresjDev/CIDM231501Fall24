@@ -8,13 +8,15 @@ class Program
         //! Week 10 Part I
         // ? Array Properties and Methods
         int[] int_1D_array = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        // Array Syntax: data type[] array_name = {value1, value2, value3, ...};
         int[,] int_2D_array = new int[3, 3] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
+        // 2D Array Syntax: data type[,] array_name = new data type[row, column] { {value1, value2, value3}, {value4, value5, value6}, ...};
         int[][] int_jagged_array = {
             new int[] { 1, 2, 3, 4 },
             new int[] { 5, 6 },
             new int[] { 7, 8, 9 }
         };
-
+        // Jagged Array Syntax: data type[][] array_name = { new data type[] {value1, value2, value3, ...}, new data type[] {value4, value5, ...}, ...};
         string[] array_name = { "Alice", "Bob", "Cathy", "Tom", "Jack" };
         string[] array_car = { "Toyota", "Honda", "Ford", "Chevy", "BMW" };
 
@@ -79,10 +81,9 @@ class Program
 
         // ! Week 10 Part II
         //  List and Dictionary
-        // List: is a collection of values that can be of different data types 
-
+        // ? List: is a collection of values that can be of different data types 
+        //  Syntax: List<data type> list_name = new List<data type>();
         Console.WriteLine("***Collection/Data Structure: List***");
-
         // Empty List of string type with values added after initialization
         List<string> name_list = new List<string>();
         name_list.Add("Alice");
@@ -91,19 +92,16 @@ class Program
         name_list.Add("David");
         name_list.Add(null); // List can contain null values
         // name_list.Add(4); // List can contain different data types
-
         foreach (string name in name_list)
         {
             Console.WriteLine(name);
         }
-
         // List with values added during initialization
         List<string> car_list = new List<string>() { "Toyota", "Honda", "Ford", "Chevy", "BMW" };
         foreach (string car in car_list)
         {
             Console.WriteLine(car);
         }
-
         //? List Methods
         // List.Count: returns the number of elements in the list
         Console.WriteLine($"List: car_list has a count of: {car_list.Count} elements");
@@ -117,6 +115,47 @@ class Program
         Console.WriteLine($"The index of \"Ford\" in car_list is {car_list.IndexOf("Ford")}");
         // List.Sort(): sorts the elements in the list
         car_list.Sort();
+        Console.WriteLine();
+
+
+        // ? Dictionary: is a collection of key-value pairs
+        Console.WriteLine("\n***Collection/Data Structure: Dictionary***");
+        // Syntax: Dictionary<key data type, value data type> dictionary_name = new Dictionary<key data type, value data type>();
+        //! Keys are required for Dictionary and must be unique and cannot be null
+        Dictionary<int, string> stud_info = new Dictionary<int, string>();
+
+
+        //? Dictionary Methods 
+        stud_info.Add(001, "Alice");
+        stud_info.Add(002, "Bob");
+        stud_info.Add(003, "David");
+        // access the value of a key
+        Console.WriteLine($"The value of key 001 is {stud_info[001]}");
+        // remove a key-value pair from the dictionary
+        if (stud_info.ContainsKey(001))
+        {
+            stud_info.Remove(001);
+        }
+        else
+        {
+            Console.WriteLine("Key 001 does not exist in the dictionary");
+        }
+        // iterates through the dictionary and prints the key-value pairs
+        foreach (var stud in stud_info)
+        {
+            Console.WriteLine($"Student ID: {stud.Key} Student Name: {stud.Value}");
+        }
+        Console.WriteLine();
+
+        // Exercise 2
+        Student alice = new Student(001, "Alice");
+        Student bob = new Student(002, "Bob");
+        Student cathy = new Student(003, "Cathy");
+        Student david = new Student(004, "David");
+        foreach (Student stud in Student.student_list)
+        {
+            stud.PrintInfo();
+        }
 
     }
 
