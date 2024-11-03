@@ -24,7 +24,7 @@ class Program
         }
         else
         {
-            Student stud5 = new Student(555, "Tom");
+            Student stud5 = new Student(555, "Tom"); // since Tom is being added to gradebook we need to add him to the student list as well
             gradebook.Add("Tom", 3.3);
         }
 
@@ -40,6 +40,7 @@ class Program
         Console.WriteLine($"The average GPA is: {avgGPA}");
 
         //! Q6 Print the student info whose GPA is greater than the average GPA
+        // wasn't able to find students in the student list (Student.studenName) without public set as access modifier.
         foreach (var student in gradebook)
         {
             if (student.Value > avgGPA)
@@ -50,11 +51,13 @@ class Program
                     {
                         stud.PrintInfo();
                     }
+                    else
+                    {
+                        continue;
+                    }
                 }
             }
         }
-
-
     }
 }
 
