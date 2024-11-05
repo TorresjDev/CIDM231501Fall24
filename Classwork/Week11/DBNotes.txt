@@ -7,6 +7,13 @@ Intro to Database
 
    * Database 
       # A large integrated collection of data 
+      # Can be modeled as a collection of entities or relationship among entities
+         # Entity: 
+            - Real-world object distinguishable from other objects
+            - entity is described in DB using a set of attributes
+         # Relationship: 
+            - Association among two or more entities
+            - E.G. Instructors teach Students 
 
    * Database Management System(DBMS)
       # Software packages implement, store & manage Database
@@ -21,3 +28,13 @@ Intro to ERD (Entity-Relationship Diagram) ER Model
 
 
 Connect to Remote MYSQL DB in VS Code
+
+Go to Activity bar and find Database
+
+Name: JTorres
+Server Type: MySQL
+Host: 34.69.59.37
+Port: 8080 (default: 3306)
+Username/Password/Database: jtorres8
+*** which is the name of YOUR WT Email. For example, my email is czhang@wtamu.edu, so my username, password and database are czhang (don’t forget the number in email name if it has)
+Then click Connect button
