@@ -1,0 +1,23 @@
+SQL - Structured Query Language
+   - A domain-specific language used to manage data, relational database management systems.
+
+Intro to Database
+   # Data Representation & Database - DB
+   # Data applications need solutions to store large quantity of data and can easily manage these data
+
+   * Database 
+      # A large integrated collection of data 
+
+   * Database Management System(DBMS)
+      # Software packages implement, store & manage Database
+      # API: Application Programming Interface
+
+   Why do we need DB % DBMS?
+      # Provide quick and safe access to store and manage data
+      # Security: protect, recover and backup 
+
+Intro to ERD (Entity-Relationship Diagram) ER Model
+   - An integrated collection of concepts for describing and manipulating data
+
+
+Connect to Remote MYSQL DB in VS Code
