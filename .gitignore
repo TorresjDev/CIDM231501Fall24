@@ -11,6 +11,9 @@
 *.sln.docstates
 *.nuget.cache
 
+# MYSQL DB Login
+DBNotes.txt
+
 # Auto-generated files by Visual Studio
 *.vspscc
 *.vssscc
