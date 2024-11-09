@@ -13,7 +13,8 @@
 
 # MYSQL DB Login
 DBNotes.txt
-
+DB.txt
+.env
 # Auto-generated files by Visual Studio
 *.vspscc
 *.vssscc
