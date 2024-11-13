@@ -14,7 +14,12 @@
 # MYSQL DB Login
 DBNotes.txt
 DB.txt
+
+# Ignore env files
 .env
+
+ex.html
+
 # Auto-generated files by Visual Studio
 *.vspscc
 *.vssscc
