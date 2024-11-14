@@ -1,13 +1,10 @@
 ﻿namespace BuffHotel;
 using System.Data;
-using MySql.Data.MySqlClient;
-using DotNetEnv;
 
 class Program
 {
     static void Main(string[] args)
     {
-        Env.Load("../../.env");
         Console.WriteLine("-----CIDM2315 FINAL PROJECT: JESUS TORRES-----");
         Console.WriteLine("        ---WELCOME TO BUFF HOTEL---");
         Console.WriteLine("Please login to continue to the Buff Hotel System");
@@ -31,20 +28,8 @@ class Program
 
         if (loggedIn)
         {
-            Console.WriteLine("Connecting to the Buff Hotel System...");
-            try
-            {
-                string connectDB = ($"server={Env.GetString("DB_SERVER")};user={Env.GetString("DB_USERNAME")};database={Env.GetString("DATABASE")};port={Env.GetString("DB_PORT")};password={Env.GetString("DB_PASSWORD")}");
-                MySqlConnection connection = new MySqlConnection(connectDB);
-                connection.Open();
-                Console.WriteLine("Connection Successful!");
-
-            }
-            catch (MySqlException ex)
-            {
-                Console.WriteLine("Conection failed...\nsorry, please try again later\n\n\nError: {0}", ex.ToString());
-
-            }
+            DatabaseConnect db_conn = new DatabaseConnect();
+            bool connected = db_conn.OpenConnection();
 
         }
     }
