@@ -4,11 +4,13 @@ using DotNetEnv;
 
 public class DatabaseConnect
 {
+
    private MySqlConnection _connection;
 
    public DatabaseConnect()
    {
       Env.Load("./.env");
+
       string connectDB = ($"server={Env.GetString("DB_SERVER")};user={Env.GetString("DB_USERNAME")};database={Env.GetString("DATABASE")};port={Env.GetString("DB_PORT")};password={Env.GetString("DB_PASSWORD")}");
       _connection = new MySqlConnection(connectDB);
    }
