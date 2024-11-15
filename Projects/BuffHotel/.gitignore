@@ -1,0 +1,20 @@
+
+# Ignore build output directories
+**/bin/
+**/obj/
+
+# Ignore env files
+.env
+
+
+.vscode/
+
+# Debug and release files
+*.log
+*.pdb
+*.dll
+*.exe
+*.cache
+*.config
+
+.fake
