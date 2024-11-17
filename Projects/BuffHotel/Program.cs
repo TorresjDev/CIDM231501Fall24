@@ -137,11 +137,36 @@ class Program
     {
         Console.WriteLine("Let's Check-In");
         Console.WriteLine("Enter Room Number: ");
-        string? roomNumber = Console.ReadLine();
+        int? roomNumber = Convert.ToInt32(Console.ReadLine());
+
+
         Console.WriteLine("Enter Customer Name: ");
         string? custName = Console.ReadLine();
+
+        Console.WriteLine("Enter Customer Email: ");
+        string? custEmail = Console.ReadLine();
+
         if (conn.GetConnection().State == ConnectionState.Open)
         {
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("CreateReservation", conn.GetConnection());
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_RoomNumber", roomNumber);
+                cmd.Parameters.AddWithValue("@p_CustomerName", custName);
+                cmd.Parameters.AddWithValue("@p_CustomerEmail", custEmail);
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("Check-In Successful!");
+                MainMenu(conn);
+
+
+            }
+            catch (System.Exception)
+            {
+                Console.WriteLine("Error: Unable to check-in");
+                throw;
+            }
 
 
         }
