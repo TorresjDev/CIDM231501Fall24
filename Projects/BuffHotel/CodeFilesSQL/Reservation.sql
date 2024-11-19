@@ -10,15 +10,15 @@ CREATE TABLE Reservations(
 
 
 -- ! Stored Procedures SQL
-
 -- ? Get Reserved Rooms Procedure
+-- DROP PROCEDURE IF EXISTS GetReservedRooms;
 CREATE PROCEDURE GetReservedRooms()
 BEGIN
       SELECT
          r.RoomNumber,
          c.Name AS CustomerName
       FROM
-         Reservation AS res
+         Reservations AS res
       JOIN
          Rooms AS r ON res.RoomNumber = r.RoomNumber
       JOIN
@@ -54,3 +54,12 @@ BEGIN
 END //
 
 DELIMITER ;
+
+
+-- Insert with CreateReservation Procedure
+CALL CreateReservation(222, 'John Doe', 'joe2@mail.com');
+
+
+Select * from `Rooms`;
+
+CALL GetReservedRooms();

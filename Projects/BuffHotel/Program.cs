@@ -67,7 +67,7 @@ class Program
     static void MainMenu(DatabaseConnect conn)
     {
         Console.WriteLine("***********************************************");
-        Console.WriteLine("---> Please select and option from the menu <---");
+        Console.WriteLine("---> Please select a # option from the menu <---");
         Console.WriteLine("1. Show Available Rooms");
         Console.WriteLine("2. Check-In");
         Console.WriteLine("3. Show Reserved Rooms");
@@ -82,7 +82,7 @@ class Program
                 ShowAvailableRooms(conn);
                 break;
             case "2":
-                CheckIn();
+                CheckIn(conn);
                 break;
             case "3":
                 ShowReservedRooms(conn);
@@ -102,7 +102,7 @@ class Program
     static void ShowAvailableRooms(DatabaseConnect conn)
     {
         if (conn.GetConnection().State == ConnectionState.Open)
-        {
+        { // Check if the connection is open before executing the query
             try
             {
 
@@ -113,11 +113,13 @@ class Program
                 Console.WriteLine($"<-------Available Rooms------->");
                 while (rdr.Read())
                 {
+
                     Console.WriteLine($"+ Room #:{rdr[0]} Capacity:{rdr[1]}");
                     count++;
                 }
                 Console.WriteLine($"<---Total Available Rooms: {count}--->");
                 rdr.Close();
+                MainMenu(conn);
             }
             catch (System.Exception)
             {
@@ -131,9 +133,43 @@ class Program
         }
     }
 
-    static void CheckIn()
+    static void CheckIn(DatabaseConnect conn)
     {
-        Console.WriteLine("CheckIn");
+        Console.WriteLine("Let's Check-In");
+        Console.WriteLine("Enter Room Number: ");
+        int? roomNumber = Convert.ToInt32(Console.ReadLine());
+
+
+        Console.WriteLine("Enter Customer Name: ");
+        string? custName = Console.ReadLine();
+
+        Console.WriteLine("Enter Customer Email: ");
+        string? custEmail = Console.ReadLine();
+
+        if (conn.GetConnection().State == ConnectionState.Open)
+        {
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("CreateReservation", conn.GetConnection());
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@p_RoomNumber", roomNumber);
+                cmd.Parameters.AddWithValue("@p_CustomerName", custName);
+                cmd.Parameters.AddWithValue("@p_CustomerEmail", custEmail);
+                cmd.ExecuteNonQuery();
+
+                Console.WriteLine("Check-In Successful!");
+                MainMenu(conn);
+
+
+            }
+            catch (System.Exception)
+            {
+                Console.WriteLine("Error: Unable to check-in");
+                throw;
+            }
+
+
+        }
 
 
     }
@@ -144,7 +180,6 @@ class Program
         {
             try
             {
-
                 MySqlCommand cmd = new MySqlCommand("GetReservedRooms", conn.GetConnection());
                 cmd.CommandType = CommandType.StoredProcedure;
                 MySqlDataReader rdr = cmd.ExecuteReader();
@@ -152,7 +187,7 @@ class Program
                 Console.WriteLine($"<-------Reserved Room(s)------->");
                 while (rdr.Read())
                 {
-                    Console.WriteLine($"+ Room #:{rdr[0]} Capacity:{rdr[1]}");
+                    Console.WriteLine($"+ Room #:{rdr[0]} Customer:{rdr[1]}");
                     count++;
                 }
                 Console.WriteLine($"<----Number of Reserved Rooms: {count}---->");
@@ -180,6 +215,8 @@ class Program
     static void LogOut()
     {
         Console.WriteLine("LogOut");
+
+
 
     }
 

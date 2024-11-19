@@ -5,14 +5,17 @@ CREATE TABLE Rooms(
     IsAvailable TINYINT NOT NULL DEFAULT 1 COMMENT 'NOT NULL'
 ) COMMENT 'Hotel Rooms Table';
 
--- ? Update Rooms table to add a new column
-
 --  ? Insert data into Rooms table
 INSERT INTO Rooms (RoomNumber, Capacity) VALUES (666, 4);
 
-
 -- ! Stored Procedures SQL
 -- ? Get Available Rooms Procedure
+
+CREATE PROCEDURE GetAllRooms()
+BEGIN   
+      SELECT * FROM Rooms;   
+END
+
 CREATE PROCEDURE GetAvailableRooms()
 BEGIN   
       SELECT * FROM Rooms Where IsAvailable = 1;   
