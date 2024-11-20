@@ -1,16 +1,14 @@
 ﻿namespace BuffHotel;
-using System.Data;
-using MySql.Data.MySqlClient;
 
 class Program
 {
     static void Main(string[] args)
     {
-        DatabaseConnect db_conn;
+        DBConnect db_conn;
 
         Console.WriteLine("-----CIDM2315 FINAL PROJECT: JESUS TORRES-----");
         Console.WriteLine("        ---WELCOME TO BUFF HOTEL---");
-        Console.WriteLine("Please login to continue to the Buff Hotel System");
+        Console.WriteLine("\nPlease login to continue to the Buff Hotel System");
 
         bool loggedIn = Login();
 
@@ -31,9 +29,9 @@ class Program
 
         if (loggedIn)
         {
-            db_conn = new DatabaseConnect();
+            db_conn = new DBConnect();
+            Console.WriteLine("Connecting to the database...");
             bool connected = db_conn.OpenConnection();
-            Console.WriteLine();
             MainMenu(db_conn);
         }
     }
@@ -64,9 +62,10 @@ class Program
         }
     }
 
-    static void MainMenu(DatabaseConnect conn)
+
+    public static void MainMenu(DBConnect conn)
     {
-        Console.WriteLine("***********************************************");
+        Console.WriteLine("\n***********************************************");
         Console.WriteLine("---> Please select a # option from the menu <---");
         Console.WriteLine("1. Show Available Rooms");
         Console.WriteLine("2. Check-In");
@@ -79,145 +78,26 @@ class Program
         switch (option)
         {
             case "1":
-                ShowAvailableRooms(conn);
+                Service.ShowAvailableRooms(conn);
                 break;
             case "2":
-                CheckIn(conn);
+                Service.CheckIn(conn);
                 break;
             case "3":
-                ShowReservedRooms(conn);
+                Service.ShowReservedRooms(conn);
                 break;
             case "4":
-                CheckOut();
+                Service.CheckOut();
                 break;
             case "5":
-                LogOut();
+                Service.LogOut();
                 break;
             default:
                 Console.WriteLine("Invalid Option");
                 break;
         }
-    }
-
-    static void ShowAvailableRooms(DatabaseConnect conn)
-    {
-        if (conn.GetConnection().State == ConnectionState.Open)
-        { // Check if the connection is open before executing the query
-            try
-            {
-
-                MySqlCommand cmd = new MySqlCommand("GetAvailableRooms", conn.GetConnection());
-                cmd.CommandType = CommandType.StoredProcedure;
-                MySqlDataReader rdr = cmd.ExecuteReader();
-                int count = 0;
-                Console.WriteLine($"<-------Available Rooms------->");
-                while (rdr.Read())
-                {
-
-                    Console.WriteLine($"+ Room #:{rdr[0]} Capacity:{rdr[1]}");
-                    count++;
-                }
-                Console.WriteLine($"<---Total Available Rooms: {count}--->");
-                rdr.Close();
-                MainMenu(conn);
-            }
-            catch (System.Exception)
-            {
-                Console.WriteLine("Error: Unable to retrieve available rooms");
-                throw;
-            }
-        }
-        else
-        {
-            Console.WriteLine("Error: Unable to connect to the database");
-        }
-    }
-
-    static void CheckIn(DatabaseConnect conn)
-    {
-        Console.WriteLine("Let's Check-In");
-        Console.WriteLine("Enter Room Number: ");
-        int? roomNumber = Convert.ToInt32(Console.ReadLine());
-
-
-        Console.WriteLine("Enter Customer Name: ");
-        string? custName = Console.ReadLine();
-
-        Console.WriteLine("Enter Customer Email: ");
-        string? custEmail = Console.ReadLine();
-
-        if (conn.GetConnection().State == ConnectionState.Open)
-        {
-            try
-            {
-                MySqlCommand cmd = new MySqlCommand("CreateReservation", conn.GetConnection());
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@p_RoomNumber", roomNumber);
-                cmd.Parameters.AddWithValue("@p_CustomerName", custName);
-                cmd.Parameters.AddWithValue("@p_CustomerEmail", custEmail);
-                cmd.ExecuteNonQuery();
-
-                Console.WriteLine("Check-In Successful!");
-                MainMenu(conn);
-
-
-            }
-            catch (System.Exception)
-            {
-                Console.WriteLine("Error: Unable to check-in");
-                throw;
-            }
-
-
-        }
-
 
     }
 
-    static void ShowReservedRooms(DatabaseConnect conn)
-    {
-        if (conn.GetConnection().State == ConnectionState.Open)
-        {
-            try
-            {
-                MySqlCommand cmd = new MySqlCommand("GetReservedRooms", conn.GetConnection());
-                cmd.CommandType = CommandType.StoredProcedure;
-                MySqlDataReader rdr = cmd.ExecuteReader();
-                int count = 0;
-                Console.WriteLine($"<-------Reserved Room(s)------->");
-                while (rdr.Read())
-                {
-                    Console.WriteLine($"+ Room #:{rdr[0]} Customer:{rdr[1]}");
-                    count++;
-                }
-                Console.WriteLine($"<----Number of Reserved Rooms: {count}---->");
-                rdr.Close();
-            }
-            catch (System.Exception)
-            {
-                Console.WriteLine("Error: Unable to retrieve available rooms");
-                throw;
-            }
-        }
-        else
-        {
-            Console.WriteLine("Error: Unable to connect to the database");
-        }
-    }
-
-    static void CheckOut()
-    {
-        Console.WriteLine("CheckOut");
-
-
-    }
-
-    static void LogOut()
-    {
-        Console.WriteLine("LogOut");
-
-
-
-    }
 
 }

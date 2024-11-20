@@ -2,12 +2,12 @@ using MySql.Data.MySqlClient;
 using DotNetEnv;
 
 
-public class DatabaseConnect
+public class DBConnect
 {
 
    private MySqlConnection _connection;
 
-   public DatabaseConnect()
+   public DBConnect()
    {
       Env.Load("./.env");
 
@@ -20,7 +20,7 @@ public class DatabaseConnect
       try
       {
          _connection.Open();
-         Console.WriteLine("Connection {0}!", _connection?.State);
+         Console.WriteLine("Connection Successful!");
          return true;
       }
       catch (MySqlException ex)
