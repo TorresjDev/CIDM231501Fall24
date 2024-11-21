@@ -6,11 +6,15 @@ public class DBConnect
 {
 
    private MySqlConnection _connection;
+   public string username = string.Empty;
+
+   public string password = string.Empty;
 
    public DBConnect()
    {
       Env.Load("./.env");
-
+      username = Env.GetString("LOGINUSER");
+      password = Env.GetString("LOGINPASSWORD");
       string connectDB = ($"server={Env.GetString("DB_SERVER")};user={Env.GetString("DB_USERNAME")};database={Env.GetString("DATABASE")};port={Env.GetString("DB_PORT")};password={Env.GetString("DB_PASSWORD")}");
       _connection = new MySqlConnection(connectDB);
    }

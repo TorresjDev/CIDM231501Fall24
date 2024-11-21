@@ -4,13 +4,15 @@ class Program
 {
     static void Main(string[] args)
     {
-        DBConnect db_conn;
+        DBConnect db_conn = new DBConnect();
+        string username = db_conn.username;
+        string password = db_conn.password;
 
         Console.WriteLine("-----CIDM2315 FINAL PROJECT: JESUS TORRES-----");
         Console.WriteLine("        ---WELCOME TO BUFF HOTEL---");
         Console.WriteLine("\nPlease login to continue to the Buff Hotel System");
 
-        bool loggedIn = Login();
+        bool loggedIn = Login(username, password);
 
         while (!loggedIn)
         {
@@ -23,34 +25,34 @@ class Program
             }
             else if (tryAgain?.ToLower() == "y")
             {
-                loggedIn = Login();
+                loggedIn = Login(username, password);
             }
         }
 
         if (loggedIn)
         {
-            db_conn = new DBConnect();
+            // db_conn = new DBConnect();
             Console.WriteLine("Connecting to the database...");
             bool connected = db_conn.OpenConnection();
             MainMenu(db_conn);
         }
     }
 
-    static bool Login()
+    static bool Login(string uName, string pWord)
     {
         Console.WriteLine("Enter Username: ");
         string? username = Console.ReadLine();
         Console.WriteLine("Enter Password: ");
         string? password = Console.ReadLine();
 
-        if (username == "alice" && password == "alice123")
+        if (username == uName && password == pWord)
         {
             Console.WriteLine("Login Successful!");
             return true;
         }
         else
         {
-            if (username != "alice")
+            if (username != uName)
             {
                 Console.WriteLine("Invalid Username");
             }
@@ -65,37 +67,41 @@ class Program
 
     public static void MainMenu(DBConnect conn)
     {
-        Console.WriteLine("\n***********************************************");
-        Console.WriteLine("---> Please select a # option from the menu <---");
-        Console.WriteLine("1. Show Available Rooms");
-        Console.WriteLine("2. Check-In");
-        Console.WriteLine("3. Show Reserved Rooms");
-        Console.WriteLine("4. Check-Out");
-        Console.WriteLine("5. Log Out");
-        Console.WriteLine("***********************************************");
-        string? option = Console.ReadLine();
-
-        switch (option)
+        string? option = string.Empty;
+        do
         {
-            case "1":
-                Service.ShowAvailableRooms(conn);
-                break;
-            case "2":
-                Service.CheckIn(conn);
-                break;
-            case "3":
-                Service.ShowReservedRooms(conn);
-                break;
-            case "4":
-                Service.CheckOut();
-                break;
-            case "5":
-                Service.LogOut();
-                break;
-            default:
-                Console.WriteLine("Invalid Option");
-                break;
-        }
+            Console.WriteLine("\n***********************************************");
+            Console.WriteLine("---> Please select a # option from the menu <---");
+            Console.WriteLine("1. Show Available Rooms");
+            Console.WriteLine("2. Check-In");
+            Console.WriteLine("3. Show Reserved Rooms");
+            Console.WriteLine("4. Check-Out");
+            Console.WriteLine("5. Log Out");
+            Console.WriteLine("***********************************************");
+            option = Console.ReadLine();
+
+            switch (option)
+            {
+                case "1":
+                    Service.ShowAvailableRooms(conn);
+                    break;
+                case "2":
+                    Service.CheckIn(conn);
+                    break;
+                case "3":
+                    Service.ShowReservedRooms(conn);
+                    break;
+                case "4":
+                    Service.CheckOut();
+                    break;
+                case "5":
+                    Service.LogOut();
+                    break;
+                default:
+                    Console.WriteLine("Invalid Option");
+                    break;
+            }
+        } while (option != "5");
 
     }
 

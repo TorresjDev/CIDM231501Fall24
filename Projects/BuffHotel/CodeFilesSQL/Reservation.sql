@@ -8,6 +8,9 @@ CREATE TABLE Reservations(
    FOREIGN KEY (CustomerId) REFERENCES Customers(CustomerId)
 ) COMMENT 'Hotel Reservations Table';
 
+ALTER TABLE Reservations 
+   MODIFY COLUMN CheckInDate DATETIME NOT NULL AFTER Status;
+
 
 -- ! Stored Procedures SQL
 -- ? Get Reserved Rooms Procedure
@@ -53,13 +56,9 @@ BEGIN
 
 END //
 
-DELIMITER ;
-
+DELIMITER ;  
 
 -- Insert with CreateReservation Procedure
-CALL CreateReservation(222, 'John Doe', 'joe2@mail.com');
-
-
-Select * from `Rooms`;
-
+CALL CreateReservation(222, 'John Doe', 'joe2@mail.com')
 CALL GetReservedRooms();
+

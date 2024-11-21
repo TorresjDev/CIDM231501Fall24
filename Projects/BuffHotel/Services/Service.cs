@@ -1,28 +1,21 @@
-
 using System.Data;
-using BuffHotel;
 using MySql.Data.MySqlClient;
 
 public class Service
 {
-
-
-
    public static void ShowAvailableRooms(DBConnect conn)
    {
       if (conn.GetConnection().State == ConnectionState.Open)
       { // Check if the connection is open before executing the query
          try
          {
-
             MySqlCommand cmd = new MySqlCommand("GetAvailableRooms", conn.GetConnection());
             cmd.CommandType = CommandType.StoredProcedure;
             MySqlDataReader rdr = cmd.ExecuteReader();
             int count = 0;
-            Console.WriteLine($"<-------Available Rooms------->");
+            Console.WriteLine($"\n<-------Available Rooms------->");
             while (rdr.Read())
             {
-
                Console.WriteLine($"+ Room #:{rdr[0]} Capacity:{rdr[1]}");
                count++;
             }
@@ -39,8 +32,6 @@ public class Service
       {
          Console.WriteLine("Error: Unable to connect to the database");
       }
-      Program.MainMenu(conn);
-
    }
 
    public static void CheckIn(DBConnect conn)
@@ -48,7 +39,6 @@ public class Service
       Console.WriteLine("\nLet's Check-In");
       Console.WriteLine("Enter Room Number: ");
       int? roomNumber = Convert.ToInt32(Console.ReadLine());
-
 
       Console.WriteLine("Enter Customer Name: ");
       string? custName = Console.ReadLine();
@@ -74,9 +64,6 @@ public class Service
             throw;
          }
       }
-      Program.MainMenu(conn);
-
-
    }
 
    public static void ShowReservedRooms(DBConnect conn)
@@ -89,7 +76,7 @@ public class Service
             cmd.CommandType = CommandType.StoredProcedure;
             MySqlDataReader rdr = cmd.ExecuteReader();
             int count = 0;
-            Console.WriteLine($"<-------Reserved Room(s)------->");
+            Console.WriteLine($"\n<-------Reserved Room(s)------->");
             while (rdr.Read())
             {
                Console.WriteLine($"+ Room #:{rdr[0]} Customer:{rdr[1]}");
@@ -108,7 +95,6 @@ public class Service
       {
          Console.WriteLine("Error: Unable to connect to the database");
       }
-      Program.MainMenu(conn);
    }
 
    public static void CheckOut()

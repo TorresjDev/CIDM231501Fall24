@@ -4,3 +4,7 @@ CREATE TABLE Customers (
    Name VARCHAR(50) NOT NULL,
    Email VARCHAR(75) NOT NULL
 ) COMMENT 'Hotel Customers Table';
+
+
+
+
