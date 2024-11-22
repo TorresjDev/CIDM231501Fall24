@@ -72,11 +72,11 @@ class Program
         {
             Console.WriteLine("\n***********************************************");
             Console.WriteLine("---> Please select a # option from the menu <---");
-            Console.WriteLine("1. Show Available Rooms");
-            Console.WriteLine("2. Check-In");
-            Console.WriteLine("3. Show Reserved Rooms");
-            Console.WriteLine("4. Check-Out");
-            Console.WriteLine("5. Log Out");
+            Console.WriteLine(" 1. Show Available Rooms");
+            Console.WriteLine(" 2. Check-In");
+            Console.WriteLine(" 3. Show Reserved Rooms");
+            Console.WriteLine(" 4. Check-Out");
+            Console.WriteLine(" 5. Log Out");
             Console.WriteLine("***********************************************");
             option = Console.ReadLine();
 
@@ -98,7 +98,9 @@ class Program
                     Service.LogOut();
                     break;
                 default:
-                    Console.WriteLine("Invalid Option");
+                    Console.WriteLine("\nInvalid Option");
+                    Console.WriteLine(">>> Press any key to return to the main menu...");
+                    Console.ReadKey();
                     break;
             }
         } while (option != "5");

@@ -32,6 +32,8 @@ public class Service
       {
          Console.WriteLine("Error: Unable to connect to the database");
       }
+      Console.WriteLine("\n>>> Press any key to continue...");
+      Console.ReadKey();
    }
 
    public static void CheckIn(DBConnect conn)
@@ -95,6 +97,8 @@ public class Service
       {
          Console.WriteLine("Error: Unable to connect to the database");
       }
+      Console.WriteLine("\n>>> Press any key to continue...");
+      Console.ReadKey();
    }
 
    public static void CheckOut()
