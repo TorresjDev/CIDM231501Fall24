@@ -10,12 +10,12 @@ CREATE TABLE Reservations(
 ) COMMENT 'Hotel Reservations Table';
 
 ALTER TABLE Reservations 
-   MODIFY COLUMN  Status ENUM('Active','Completed','Cancelled') NOT NULL  DEFAULT 'Active' COMMENT 'NOT NULL';
+   MODIFY COLUMN  CheckInDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'NOT NULL';
 
 -- ! Stored Procedures SQL
 -- ? Get Reserved Rooms Procedure
--- DROP PROCEDURE IF EXISTS GetReservedRooms;
-CREATE PROCEDURE GetReservedRooms()
+-- This procedure returns the list of rooms that are reserved by customers who have an active reservation.
+CREATE PROCEDURE GetReservedRoomsByActive()
 BEGIN
       SELECT
          r.RoomNumber,
@@ -27,11 +27,11 @@ BEGIN
       JOIN
          Customers AS c ON res.CustomerId = c.`CustomerId`
       WHERE
-         r.IsAvailable = FALSE;
+         r.IsAvailable = FALSE
+         AND res.Status = 'Active';
 END
 
 -- ? Create Reservation Procedure
-DELIMITER //
 
 CREATE PROCEDURE CreateReservation(
    IN p_RoomNumber INT,
@@ -53,16 +53,22 @@ BEGIN
 
 END //
 
-DELIMITER ;  
-
 -- Insert with CreateReservation Procedure
 CALL CreateReservation(222, 'John Doe', 'joe2@mail.com')
 CALL GetReservedRooms();
 
 -- ? Check Out Reservation Procedure by RoomNumber
 -- updates the status of the reservation to Completed by RoomNumber
--- also updates the room column IsAvailable to 1 (TRUE)
+-- also updates the room table > column IsAvailable to 1 (TRUE)
 
 CREATE PROCEDURE CheckOutReservation(
-    
+   IN p_RoomNumber INT    
 )
+BEGIN 
+   UPDATE Reservations SET Status = 'Completed' WHERE RoomNumber = p_RoomNumber;
+   UPDATE Rooms SET IsAvailable = TRUE WHERE RoomNumber = p_RoomNumber;
+END // 
+
+CALL CheckOutReservation(222);
+
+SHOW CREATE TABLE Reservations;

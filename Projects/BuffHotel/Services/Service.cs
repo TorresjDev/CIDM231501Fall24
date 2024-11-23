@@ -103,7 +103,9 @@ public class Service
 
    public static void CheckOut()
    {
-      Console.WriteLine("CheckOut");
+      Console.WriteLine("\n Check-Out Menu");
+      Console.WriteLine("Enter Room Number: ");
+      int? roomNumber = Convert.ToInt32(Console.ReadLine());
 
 
    }
