@@ -17,6 +17,8 @@ ALTER TABLE <table_name>
 
 CALL <procedure_name>(); -- Call the procedure
 
+SHOW CREATE TABLE <table_name>; -- Show the create table statement
+
 -- Use to drop the procedure if it already exists
 DROP PROCEDURE IF EXISTS <procedure_name>;
 

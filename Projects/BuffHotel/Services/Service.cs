@@ -19,7 +19,7 @@ public class Service
                Console.WriteLine($"+ Room #:{rdr[0]} Capacity:{rdr[1]}");
                count++;
             }
-            Console.WriteLine($"<---Total Available Rooms: {count}--->");
+            Console.WriteLine($"<---Total count of Available Rooms: {count}--->");
             rdr.Close();
          }
          catch (System.Exception)
@@ -40,13 +40,13 @@ public class Service
    {
       Console.WriteLine("\nLet's Check-In");
       Console.WriteLine("Enter Room Number: ");
-      int? roomNumber = Convert.ToInt32(Console.ReadLine());
+      int? roomNumber = Convert.ToInt32(Console.ReadLine()?.Trim());
 
       Console.WriteLine("Enter Customer Name: ");
-      string? custName = Console.ReadLine();
+      string? custName = Console.ReadLine()?.Trim().ToLower();
 
       Console.WriteLine("Enter Customer Email: ");
-      string? custEmail = Console.ReadLine();
+      string? custEmail = Console.ReadLine()?.Trim().ToLower();
 
       if (conn.GetConnection().State == ConnectionState.Open)
       {
@@ -66,6 +66,10 @@ public class Service
             throw;
          }
       }
+      else
+      {
+         Console.WriteLine("Error: Unable to connect to the database");
+      }
    }
 
    public static void ShowReservedRooms(DBConnect conn)
@@ -74,7 +78,7 @@ public class Service
       {
          try
          {
-            MySqlCommand cmd = new MySqlCommand("GetReservedRooms", conn.GetConnection());
+            MySqlCommand cmd = new MySqlCommand("GetReservedRoomsByActive", conn.GetConnection());
             cmd.CommandType = CommandType.StoredProcedure;
             MySqlDataReader rdr = cmd.ExecuteReader();
             int count = 0;
@@ -84,7 +88,7 @@ public class Service
                Console.WriteLine($"+ Room #:{rdr[0]} Customer:{rdr[1]}");
                count++;
             }
-            Console.WriteLine($"<----Number of Reserved Rooms: {count}---->");
+            Console.WriteLine($"<----Total count of Reserved Rooms: {count}---->");
             rdr.Close();
          }
          catch (System.Exception)
@@ -101,13 +105,58 @@ public class Service
       Console.ReadKey();
    }
 
-   public static void CheckOut()
+   public static void CheckOut(DBConnect conn)
    {
       Console.WriteLine("\n Check-Out Menu");
       Console.WriteLine("Enter Room Number: ");
-      int? roomNumber = Convert.ToInt32(Console.ReadLine());
-
-
+      int roomNumber = Convert.ToInt32(Console.ReadLine()?.Trim());
+      if (conn.GetConnection().State == ConnectionState.Open)
+      {
+         try
+         {
+            MySqlCommand cmd = new MySqlCommand("GetReservedRoomById", conn.GetConnection());
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@p_RoomNumber", roomNumber);
+            MySqlDataReader rdr = cmd.ExecuteReader();
+            if (!rdr.HasRows)
+            {
+               Console.WriteLine($"Sorry, Room {roomNumber} is not currently reserved");
+               return;
+            }
+            else
+            {
+               while (rdr.Read())
+               {
+                  Console.WriteLine($"+ Room #:{rdr[0]} Customer:{rdr[1]}");
+               }
+               rdr.Close();
+               Console.WriteLine("Please confirm customer info and input y to confirm check-out OR input any key to cancel");
+               string? confirm = Console.ReadLine()?.Trim().ToLower();
+               if (confirm == "y")
+               {
+                  MySqlCommand cmd2 = new MySqlCommand("CheckOutReservation", conn.GetConnection());
+                  cmd2.CommandType = CommandType.StoredProcedure;
+                  cmd2.Parameters.AddWithValue("@p_RoomNumber", roomNumber);
+                  cmd2.ExecuteNonQuery();
+                  Console.WriteLine("Check-Out Successful!");
+               }
+               else
+               {
+                  Console.WriteLine("Check-Out Cancelled");
+                  return;
+               }
+            }
+         }
+         catch (System.Exception)
+         {
+            Console.WriteLine("Error: Unable to check-out");
+            throw;
+         }
+      }
+      else
+      {
+         Console.WriteLine("Error: Unable to connect to the database");
+      }
    }
 
    public static void LogOut()

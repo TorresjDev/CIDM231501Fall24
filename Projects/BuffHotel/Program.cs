@@ -17,13 +17,13 @@ class Program
         while (!loggedIn)
         {
             Console.WriteLine("Try again? (Y/N)");
-            string? tryAgain = Console.ReadLine();
-            if (tryAgain?.ToLower() == "n")
+            string? tryAgain = Console.ReadLine()?.Trim().ToLower(); ;
+            if (tryAgain == "n")
             {
                 Console.WriteLine("Thank you for stopping by, \n Goodbye!");
                 break;
             }
-            else if (tryAgain?.ToLower() == "y")
+            else if (tryAgain == "y")
             {
                 loggedIn = Login(username, password);
             }
@@ -41,9 +41,9 @@ class Program
     static bool Login(string uName, string pWord)
     {
         Console.WriteLine("Enter Username: ");
-        string? username = Console.ReadLine();
+        string? username = Console.ReadLine()?.Trim().ToLower();
         Console.WriteLine("Enter Password: ");
-        string? password = Console.ReadLine();
+        string? password = Console.ReadLine()?.Trim().ToLower();
 
         if (username == uName && password == pWord)
         {
@@ -78,7 +78,7 @@ class Program
             Console.WriteLine(" 4. Check-Out");
             Console.WriteLine(" 5. Log Out");
             Console.WriteLine("***********************************************");
-            option = Console.ReadLine();
+            option = Console.ReadLine()?.Trim();
 
             switch (option)
             {
@@ -92,7 +92,7 @@ class Program
                     Service.ShowReservedRooms(conn);
                     break;
                 case "4":
-                    Service.CheckOut();
+                    Service.CheckOut(conn);
                     break;
                 case "5":
                     Service.LogOut();
