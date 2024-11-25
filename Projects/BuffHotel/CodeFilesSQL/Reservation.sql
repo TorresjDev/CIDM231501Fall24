@@ -60,6 +60,7 @@ BEGIN
    SELECT
       r.RoomNumber,
       cust.Name as CustomerName
+      
    FROM
       Reservations AS res
    JOIN

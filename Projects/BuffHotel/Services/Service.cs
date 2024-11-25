@@ -40,7 +40,12 @@ public class Service
    {
       Console.WriteLine("\nLet's Check-In");
       Console.WriteLine("Enter Room Number: ");
-      int? roomNumber = Convert.ToInt32(Console.ReadLine()?.Trim());
+
+      int roomNumber;
+      while (!int.TryParse(Console.ReadLine()?.Trim(), out roomNumber))
+      {
+         Console.WriteLine("Invalid Room Number. Please enter a valid room number");
+      }
 
       Console.WriteLine("Enter Customer Name: ");
       string? custName = Console.ReadLine()?.Trim().ToLower();
@@ -143,6 +148,8 @@ public class Service
                else
                {
                   Console.WriteLine("Check-Out Cancelled");
+                  Console.WriteLine("\n>>> Press any key to continue...");
+                  Console.ReadKey();
                   return;
                }
             }

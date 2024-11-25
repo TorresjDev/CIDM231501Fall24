@@ -34,6 +34,7 @@ class Program
             // db_conn = new DBConnect();
             Console.WriteLine("Connecting to the database...");
             bool connected = db_conn.OpenConnection();
+
             MainMenu(db_conn);
         }
     }
