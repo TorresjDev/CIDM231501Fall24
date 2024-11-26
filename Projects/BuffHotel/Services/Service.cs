@@ -1,8 +1,38 @@
 using System.Data;
 using MySql.Data.MySqlClient;
+using BuffHotel.Models; // Add this line to include the Room class
 
 public class Service
 {
+   public static void GetAllRooms(DBConnect conn, List<Room> rooms)
+   {
+      if (conn.GetConnection().State == ConnectionState.Open)
+      {
+         try
+         {
+            MySqlCommand cmd = new MySqlCommand("GetAllRooms", conn.GetConnection());
+            cmd.CommandType = CommandType.StoredProcedure;
+            MySqlDataReader rdr = cmd.ExecuteReader();
+            while (rdr.Read())
+            {
+               Room room = new Room();
+               room.RoomNumber = Convert.ToInt32(rdr[0]);
+               room.Capacity = Convert.ToInt32(rdr[1]);
+               room.IsAvailable = Convert.ToByte(rdr[2]);
+               rooms.Add(room);
+            }
+         }
+         catch (System.Exception)
+         {
+            Console.WriteLine("Error: Unable to retrieve rooms");
+            throw;
+         }
+      }
+      else
+      {
+         Console.WriteLine("Error: Unable to connect to the database");
+      }
+   }
    public static void ShowAvailableRooms(DBConnect conn)
    {
       if (conn.GetConnection().State == ConnectionState.Open)

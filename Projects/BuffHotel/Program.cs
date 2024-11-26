@@ -1,4 +1,6 @@
-﻿namespace BuffHotel;
+﻿using BuffHotel.Models;
+
+namespace BuffHotel;
 
 class Program
 {
@@ -7,6 +9,7 @@ class Program
         DBConnect db_conn = new DBConnect();
         string username = db_conn.username;
         string password = db_conn.password;
+        List<Room> rooms = Room.Rooms;
 
         Console.WriteLine("-----CIDM2315 FINAL PROJECT: JESUS TORRES-----");
         Console.WriteLine("        ---WELCOME TO BUFF HOTEL---");
@@ -35,7 +38,7 @@ class Program
             Console.WriteLine("Connecting to the database...");
             bool connected = db_conn.OpenConnection();
 
-            MainMenu(db_conn);
+            MainMenu(db_conn, rooms);
         }
     }
 
@@ -66,7 +69,7 @@ class Program
     }
 
 
-    public static void MainMenu(DBConnect conn)
+    public static void MainMenu(DBConnect conn, List<Room> rooms)
     {
         string? option = string.Empty;
         do

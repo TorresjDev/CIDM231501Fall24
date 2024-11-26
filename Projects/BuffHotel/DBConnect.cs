@@ -40,6 +40,7 @@ public class DBConnect
       Console.WriteLine("Connection Closed Successfully!");
    }
 
+   // Use this method to return the connection object
    public MySqlConnection GetConnection()
    {
       return _connection;

@@ -20,3 +20,7 @@ CREATE PROCEDURE GetAvailableRooms()
 BEGIN   
       SELECT * FROM Rooms Where IsAvailable = 1;   
 END
+
+CALL GetAllRooms();
+
+SELECT * FROM Rooms;

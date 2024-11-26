@@ -5,5 +5,6 @@ namespace BuffHotel.Models
       public static List<Room> Rooms = new List<Room>();
       public int RoomNumber { get; set; }
       public int Capacity { get; set; }
+      public byte IsAvailable { get; set; }
    }
 }
