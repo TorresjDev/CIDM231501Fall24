@@ -22,9 +22,9 @@ public class Service
                rooms.Add(room);
             }
          }
-         catch (System.Exception)
+         catch (Exception ex)
          {
-            Console.WriteLine("Error: Unable to retrieve rooms");
+            Console.WriteLine($"Error: Unable to retrieve rooms\nError: {ex.Message}");
             throw;
          }
       }
@@ -33,6 +33,39 @@ public class Service
          Console.WriteLine("Error: Unable to connect to the database");
       }
    }
+   /*public static void ShowAvailableRooms(DBConnect conn)
+   {
+      if (conn.GetConnection().State == ConnectionState.Open)
+      { // Check if the connection is open before executing the query
+         try
+         {
+            MySqlCommand cmd = new MySqlCommand("GetAvailableRooms", conn.GetConnection());
+            cmd.CommandType = CommandType.StoredProcedure;
+            MySqlDataReader rdr = cmd.ExecuteReader();
+            int count = 0;
+            Console.WriteLine($"\n<-------Available Rooms------->");
+            while (rdr.Read())
+            {
+               Console.WriteLine($"+ Room #:{rdr[0]} Capacity:{rdr[1]}");
+               count++;
+            }
+            Console.WriteLine($"<---Total count of Available Rooms: {count}--->");
+            rdr.Close();
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine($"Error: Unable to retrieve available rooms\nError: {ex.Message}");
+            throw;
+         }
+      }
+      else
+      {
+         Console.WriteLine("Error: Unable to connect to the database");
+      }
+      Console.WriteLine("\n>>> Press any key to continue...");
+      Console.ReadKey();
+   } */
+
    public static void ShowAvailableRooms(DBConnect conn)
    {
       if (conn.GetConnection().State == ConnectionState.Open)
@@ -52,9 +85,9 @@ public class Service
             Console.WriteLine($"<---Total count of Available Rooms: {count}--->");
             rdr.Close();
          }
-         catch (System.Exception)
+         catch (Exception ex)
          {
-            Console.WriteLine("Error: Unable to retrieve available rooms");
+            Console.WriteLine($"Error: Unable to retrieve available rooms\nError: {ex.Message}");
             throw;
          }
       }
@@ -72,6 +105,7 @@ public class Service
       Console.WriteLine("Enter Room Number: ");
 
       int roomNumber;
+      // need condition to iterate through existing available rooms
       while (!int.TryParse(Console.ReadLine()?.Trim(), out roomNumber))
       {
          Console.WriteLine("Invalid Room Number. Please enter a valid room number");
@@ -95,9 +129,9 @@ public class Service
             cmd.ExecuteNonQuery();
             Console.WriteLine("Check-In Successful!");
          }
-         catch (System.Exception)
+         catch (Exception ex)
          {
-            Console.WriteLine("Error: Unable to check-in");
+            Console.WriteLine($"Error: Unable to check-in\nError: {ex.Message}");
             throw;
          }
       }
@@ -126,9 +160,9 @@ public class Service
             Console.WriteLine($"<----Total count of Reserved Rooms: {count}---->");
             rdr.Close();
          }
-         catch (System.Exception)
+         catch (Exception ex)
          {
-            Console.WriteLine("Error: Unable to retrieve available rooms");
+            Console.WriteLine($"Error: Unable to retrieve reserved rooms\nError: {ex.Message}");
             throw;
          }
       }
@@ -145,6 +179,7 @@ public class Service
       Console.WriteLine("\n Check-Out Menu");
       Console.WriteLine("Enter Room Number: ");
       int roomNumber = Convert.ToInt32(Console.ReadLine()?.Trim());
+      // need condition to iterate through existing reserved rooms
       if (conn.GetConnection().State == ConnectionState.Open)
       {
          try
@@ -184,9 +219,9 @@ public class Service
                }
             }
          }
-         catch (System.Exception)
+         catch (Exception ex)
          {
-            Console.WriteLine("Error: Unable to check-out");
+            Console.WriteLine($"Error: Unable to check-out\nError: {ex.Message}");
             throw;
          }
       }

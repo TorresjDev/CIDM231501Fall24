@@ -20,7 +20,7 @@ class Program
         while (!loggedIn)
         {
             Console.WriteLine("Try again? (Y/N)");
-            string? tryAgain = Console.ReadLine()?.Trim().ToLower(); ;
+            string? tryAgain = Console.ReadLine()?.Trim().ToLower();
             if (tryAgain == "n")
             {
                 Console.WriteLine("Thank you for stopping by, \n Goodbye!");
@@ -68,8 +68,7 @@ class Program
         }
     }
 
-
-    public static void MainMenu(DBConnect conn, List<Room> rooms)
+    public static void MainMenu(DBConnect conn, List<Room> p_rooms)
     {
         string? option = string.Empty;
         do
@@ -83,6 +82,7 @@ class Program
             Console.WriteLine(" 5. Log Out");
             Console.WriteLine("***********************************************");
             option = Console.ReadLine()?.Trim();
+
 
             switch (option)
             {

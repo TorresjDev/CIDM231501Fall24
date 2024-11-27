@@ -1,13 +1,10 @@
 using MySql.Data.MySqlClient;
 using DotNetEnv;
 
-
 public class DBConnect
 {
-
    private MySqlConnection _connection;
    public string username = string.Empty;
-
    public string password = string.Empty;
 
    public DBConnect()
