@@ -78,6 +78,16 @@ class Program
         List<AvailableRoom> avbRooms = new List<AvailableRoom>();
         List<ReservedRoom> resRooms = new List<ReservedRoom>();
 
+        if (avbRooms.Count == 0)
+        {
+            avbRooms = Service.GetAvRooms(conn);
+        }
+
+        if (resRooms.Count == 0)
+        {
+            resRooms = Service.GetResRooms(conn);
+        }
+
         do
         {
             Console.WriteLine("\n***********************************************");
@@ -93,13 +103,13 @@ class Program
             switch (option)
             {
                 case "1":
-                    Service.ShowAvailableRooms(conn, avbRooms);
+                    Service.FilterAvailableRooms(avbRooms);
                     break;
                 case "2":
                     Service.CheckIn(conn, avbRooms);
                     break;
                 case "3":
-                    Service.ShowReservedRooms(conn, resRooms);
+                    Service.FilterReservedRooms(resRooms);
                     break;
                 case "4":
                     Service.CheckOut(conn, resRooms);

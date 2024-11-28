@@ -4,8 +4,9 @@ using BuffHotel.Models; // Add this line to include the Room class
 
 public class Service
 {
-   public static void GetRooms(DBConnect conn, List<AvailableRoom> avRms, List<ReservedRoom> resRms)
+   public static List<AvailableRoom> GetAvRooms(DBConnect conn)
    {
+      List<AvailableRoom> avRooms = new List<AvailableRoom>();
       if (conn.GetConnection().State == ConnectionState.Open)
       {
          try
@@ -13,18 +14,13 @@ public class Service
             MySqlCommand cmd = new MySqlCommand("GetAvailableRooms", conn.GetConnection());
             cmd.CommandType = CommandType.StoredProcedure;
             MySqlDataReader rdr = cmd.ExecuteReader();
-            int count = 0;
-            Console.WriteLine($"\n<-------Available Rooms------->");
             while (rdr.Read())
             {
                AvailableRoom room = new AvailableRoom();
                room.RoomNumber = Convert.ToInt32(rdr[0]);
                room.Capacity = Convert.ToInt32(rdr[1]);
-               Console.WriteLine($"+ Room #:{room.RoomNumber} Capacity:{room.Capacity}");
-               avRms.Add(room);
-               count++;
+               avRooms.Add(room);
             }
-            Console.WriteLine($"<---Total count of Available Rooms: {count}--->");
             rdr.Close();
          }
          catch (Exception ex)
@@ -32,47 +28,52 @@ public class Service
             Console.WriteLine($"Error: Unable to retrieve available rooms\nError: {ex.Message}");
             throw;
          }
-
-
       }
       else
       {
          Console.WriteLine("Error: Unable to connect to the database");
       }
+      return avRooms;
    }
 
-   public static void ShowAvailableRooms(DBConnect conn, List<AvailableRoom> avRms)
+   public static List<ReservedRoom> GetResRooms(DBConnect conn)
    {
+      List<ReservedRoom> resRooms = new List<ReservedRoom>();
       if (conn.GetConnection().State == ConnectionState.Open)
-      { // Check if the connection is open before executing the query
+      {
          try
          {
-            MySqlCommand cmd = new MySqlCommand("GetAvailableRooms", conn.GetConnection());
+            MySqlCommand cmd = new MySqlCommand("GetReservedRoomsByActive", conn.GetConnection());
             cmd.CommandType = CommandType.StoredProcedure;
             MySqlDataReader rdr = cmd.ExecuteReader();
-            int count = 0;
-            Console.WriteLine($"\n<-------Available Rooms------->");
             while (rdr.Read())
             {
-               AvailableRoom room = new AvailableRoom();
+               ReservedRoom room = new ReservedRoom();
                room.RoomNumber = Convert.ToInt32(rdr[0]);
-               room.Capacity = Convert.ToInt32(rdr[1]);
-               Console.WriteLine($"+ Room #:{room.RoomNumber} Capacity:{room.Capacity}");
-               avRms.Add(room);
-               count++;
+               room.CustomerName = Convert.ToString(rdr[1]) ?? string.Empty;
+               resRooms.Add(room);
             }
-            Console.WriteLine($"<---Total count of Available Rooms: {count}--->");
             rdr.Close();
          }
          catch (Exception ex)
          {
-            Console.WriteLine($"Error: Unable to retrieve available rooms\nError: {ex.Message}");
+            Console.WriteLine($"Error: Unable to retrieve reserved rooms\nError: {ex.Message}");
             throw;
          }
       }
       else
       {
          Console.WriteLine("Error: Unable to connect to the database");
+      }
+      return resRooms;
+   }
+
+   public static void FilterAvailableRooms(List<AvailableRoom> avRms)
+   {
+      Console.WriteLine("\n<-------Available Room(s)------->");
+      foreach (AvailableRoom room in avRms)
+      {
+         Console.WriteLine($"+ Room #:{room.RoomNumber} Capacity:{room.Capacity}");
       }
       Console.WriteLine("\n>>> Press any key to continue...");
       Console.ReadKey();
@@ -83,7 +84,7 @@ public class Service
       Console.WriteLine("\nLet's Check-In");
       Console.WriteLine("Enter Room Number: ");
 
-      int roomNumber;
+      int roomNumber = Convert.ToInt32(Console.ReadLine()?.Trim());
       // need condition to iterate through existing available rooms
       while (!int.TryParse(Console.ReadLine()?.Trim(), out roomNumber))
       {
@@ -120,38 +121,12 @@ public class Service
       }
    }
 
-   public static void ShowReservedRooms(DBConnect conn, List<ReservedRoom> resRms)
+   public static void FilterReservedRooms(List<ReservedRoom> resRms)
    {
-      if (conn.GetConnection().State == ConnectionState.Open)
+      Console.WriteLine("\n<-------Reserved Room(s)------->");
+      foreach (ReservedRoom room in resRms)
       {
-         try
-         {
-            MySqlCommand cmd = new MySqlCommand("GetReservedRoomsByActive", conn.GetConnection());
-            cmd.CommandType = CommandType.StoredProcedure;
-            MySqlDataReader rdr = cmd.ExecuteReader();
-            int count = 0;
-            Console.WriteLine($"\n<-------Reserved Room(s)------->");
-            while (rdr.Read())
-            {
-               ReservedRoom room = new ReservedRoom();
-               room.RoomNumber = Convert.ToInt32(rdr[0]);
-               room.CustomerName = Convert.ToString(rdr[1]) ?? string.Empty;
-               Console.WriteLine($"+ Room #:{room.RoomNumber} Customer:{room.CustomerName}");
-               resRms.Add(room);
-               count++;
-            }
-            Console.WriteLine($"<----Total count of Reserved Rooms: {count}---->");
-            rdr.Close();
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine($"Error: Unable to retrieve reserved rooms\nError: {ex.Message}");
-            throw;
-         }
-      }
-      else
-      {
-         Console.WriteLine("Error: Unable to connect to the database");
+         Console.WriteLine($"+ Room #:{room.RoomNumber} Customer:{room.CustomerName}");
       }
       Console.WriteLine("\n>>> Press any key to continue...");
       Console.ReadKey();
