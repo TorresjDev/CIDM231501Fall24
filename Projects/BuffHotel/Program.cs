@@ -9,7 +9,6 @@ class Program
         DBConnect db_conn = new DBConnect();
         string username = db_conn.username;
         string password = db_conn.password;
-        List<Room> rooms = Room.Rooms;
 
         Console.WriteLine("-----CIDM2315 FINAL PROJECT: JESUS TORRES-----");
         Console.WriteLine("        ---WELCOME TO BUFF HOTEL---");
@@ -37,8 +36,13 @@ class Program
             // db_conn = new DBConnect();
             Console.WriteLine("Connecting to the database...");
             bool connected = db_conn.OpenConnection();
-
-            MainMenu(db_conn, rooms);
+            if (!connected)
+            {
+                Console.WriteLine("Error: Unable to connect to the database");
+                Console.WriteLine("Goodbye!");
+                return;
+            }
+            MainMenu(db_conn);
         }
     }
 
@@ -68,9 +72,12 @@ class Program
         }
     }
 
-    public static void MainMenu(DBConnect conn, List<Room> p_rooms)
+    public static void MainMenu(DBConnect conn)
     {
         string? option = string.Empty;
+        List<AvailableRoom> avbRooms = new List<AvailableRoom>();
+        List<ReservedRoom> resRooms = new List<ReservedRoom>();
+
         do
         {
             Console.WriteLine("\n***********************************************");
@@ -83,20 +90,19 @@ class Program
             Console.WriteLine("***********************************************");
             option = Console.ReadLine()?.Trim();
 
-
             switch (option)
             {
                 case "1":
-                    Service.ShowAvailableRooms(conn);
+                    Service.ShowAvailableRooms(conn, avbRooms);
                     break;
                 case "2":
-                    Service.CheckIn(conn);
+                    Service.CheckIn(conn, avbRooms);
                     break;
                 case "3":
-                    Service.ShowReservedRooms(conn);
+                    Service.ShowReservedRooms(conn, resRooms);
                     break;
                 case "4":
-                    Service.CheckOut(conn);
+                    Service.CheckOut(conn, resRooms);
                     break;
                 case "5":
                     Service.LogOut();

@@ -18,3 +18,5 @@
 *.config
 
 .fake
+
+Notes.cs

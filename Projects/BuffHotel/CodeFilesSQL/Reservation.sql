@@ -85,9 +85,7 @@ BEGIN
 END // 
 
 SHOW CREATE TABLE Reservations;
-
-CALL CreateReservation(222, 'John Doe', 'joe2@mail.com')
-
+CALL CreateReservation(222, 'John Doe', 'joe2@mail.com');
 
 CALL GetReservedRoomsByActive();
 CALL GetReservedRoomById(222);
