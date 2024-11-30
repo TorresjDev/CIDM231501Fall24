@@ -48,9 +48,11 @@ public class Service
             MySqlDataReader rdr = cmd.ExecuteReader();
             while (rdr.Read())
             {
-               ReservedRoom room = new ReservedRoom();
-               room.RoomNumber = Convert.ToInt32(rdr[0]);
-               room.CustomerName = Convert.ToString(rdr[1]) ?? string.Empty;
+               ReservedRoom room = new ReservedRoom
+               {
+                  RoomNumber = Convert.ToInt32(rdr[0]),
+                  CustomerName = Convert.ToString(rdr[1]) ?? string.Empty
+               };
                resRooms.Add(room);
             }
             rdr.Close();
@@ -84,11 +86,17 @@ public class Service
       Console.WriteLine("\nLet's Check-In");
       Console.WriteLine("Enter Room Number: ");
 
-      int roomNumber = Convert.ToInt32(Console.ReadLine()?.Trim());
-      // need condition to iterate through existing available rooms
+      int roomNumber;
+
       while (!int.TryParse(Console.ReadLine()?.Trim(), out roomNumber))
       {
          Console.WriteLine("Invalid Room Number. Please enter a valid room number");
+      }
+
+      if (!avRms.Exists(r => r.RoomNumber == roomNumber))
+      {
+         Console.WriteLine($"Room {roomNumber} is not available");
+         return;
       }
 
       Console.WriteLine("Enter Customer Name: ");
@@ -108,6 +116,7 @@ public class Service
             cmd.Parameters.AddWithValue("@p_CustomerEmail", custEmail);
             cmd.ExecuteNonQuery();
             Console.WriteLine("Check-In Successful!");
+            GetAvRooms(conn);
          }
          catch (Exception ex)
          {
@@ -136,8 +145,22 @@ public class Service
    {
       Console.WriteLine("\n Check-Out Menu");
       Console.WriteLine("Enter Room Number: ");
-      int roomNumber = Convert.ToInt32(Console.ReadLine()?.Trim());
-      // need condition to iterate through existing reserved rooms
+      int roomNumber;
+
+      while (!int.TryParse(Console.ReadLine()?.Trim(), out roomNumber))
+      {
+         Console.WriteLine("Invalid Room Number\n>>>Please enter a valid room number");
+      }
+
+      while (!resRms.Exists(r => r.RoomNumber == roomNumber))
+      {
+         Console.WriteLine("Invalid Room Number\n>>>Please enter a valid room number");
+         while (!int.TryParse(Console.ReadLine()?.Trim(), out roomNumber))
+         {
+            Console.WriteLine("Invalid Room Number\n>>>Please enter a valid room number");
+         }
+      }
+
       if (conn.GetConnection().State == ConnectionState.Open)
       {
          try

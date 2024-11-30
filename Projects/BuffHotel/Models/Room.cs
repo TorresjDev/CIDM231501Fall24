@@ -10,7 +10,7 @@ namespace BuffHotel.Models
    public class ReservedRoom
    {
       public int RoomNumber { get; set; }
-      public string CustomerName { get; set; }
+      public required string CustomerName { get; set; } //using required to satisfy the non-nullable reference type
    }
 
    public class Room
