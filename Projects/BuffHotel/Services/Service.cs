@@ -1,6 +1,7 @@
 using System.Data;
 using MySql.Data.MySqlClient;
-using BuffHotel.Models; // Add this line to include the Room class
+using BuffHotel.Models;
+using Utilities; // Add this line to include the Room class
 
 public class Service
 {
@@ -145,7 +146,7 @@ public class Service
    {
       Console.WriteLine("\n Check-Out Menu");
       Console.WriteLine("Enter Room Number: ");
-      int roomNumber;
+      int roomNumber = MethodHelper.ValRoomNumber();
 
       while (!int.TryParse(Console.ReadLine()?.Trim(), out roomNumber))
       {
@@ -155,10 +156,7 @@ public class Service
       while (!resRms.Exists(r => r.RoomNumber == roomNumber))
       {
          Console.WriteLine("Invalid Room Number\n>>>Please enter a valid room number");
-         while (!int.TryParse(Console.ReadLine()?.Trim(), out roomNumber))
-         {
-            Console.WriteLine("Invalid Room Number\n>>>Please enter a valid room number");
-         }
+         roomNumber = MethodHelper.ValRoomNumber();
       }
 
       if (conn.GetConnection().State == ConnectionState.Open)
