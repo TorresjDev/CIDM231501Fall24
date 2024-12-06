@@ -1,7 +1,7 @@
 using System.Data;
 using MySql.Data.MySqlClient;
 using BuffHotel.Models;
-using Utilities; // Add this line to include the Room class
+using Utilities;
 
 public class Service
 {
@@ -73,10 +73,32 @@ public class Service
 
    public static void FilterAvailableRooms(List<AvailableRoom> avRms)
    {
+      if (avRms.Count > 0)
+      {
+         Console.WriteLine("No available rooms at the moment");
+         return;
+      }
       Console.WriteLine("\n<-------Available Room(s)------->");
       foreach (AvailableRoom room in avRms)
       {
          Console.WriteLine($"+ Room #:{room.RoomNumber} Capacity:{room.Capacity}");
+      }
+      Console.WriteLine("\n>>> Press any key to continue...");
+      Console.ReadKey();
+   }
+
+   public static void FilterReservedRooms(List<ReservedRoom> resRms)
+   {
+      if (resRms.Count == 0)
+      {
+         Console.WriteLine("Sorry, no reserved rooms at the moment");
+         return;
+      }
+
+      Console.WriteLine("\n<-------Reserved Room(s)------->");
+      foreach (ReservedRoom room in resRms)
+      {
+         Console.WriteLine($"+ Room #:{room.RoomNumber} Customer:{room.CustomerName}");
       }
       Console.WriteLine("\n>>> Press any key to continue...");
       Console.ReadKey();
@@ -87,17 +109,12 @@ public class Service
       Console.WriteLine("\nLet's Check-In");
       Console.WriteLine("Enter Room Number: ");
 
-      int roomNumber;
+      int roomNumber = MethodHelper.ValRoomNumber();
 
-      while (!int.TryParse(Console.ReadLine()?.Trim(), out roomNumber))
+      while (!avRms.Exists(r => r.RoomNumber == roomNumber))
       {
-         Console.WriteLine("Invalid Room Number. Please enter a valid room number");
-      }
-
-      if (!avRms.Exists(r => r.RoomNumber == roomNumber))
-      {
-         Console.WriteLine($"Room {roomNumber} is not available");
-         return;
+         Console.WriteLine("Invalid Room Number\n>>>Please enter a valid room number");
+         roomNumber = MethodHelper.ValRoomNumber();
       }
 
       Console.WriteLine("Enter Customer Name: ");
@@ -131,27 +148,11 @@ public class Service
       }
    }
 
-   public static void FilterReservedRooms(List<ReservedRoom> resRms)
-   {
-      Console.WriteLine("\n<-------Reserved Room(s)------->");
-      foreach (ReservedRoom room in resRms)
-      {
-         Console.WriteLine($"+ Room #:{room.RoomNumber} Customer:{room.CustomerName}");
-      }
-      Console.WriteLine("\n>>> Press any key to continue...");
-      Console.ReadKey();
-   }
-
    public static void CheckOut(DBConnect conn, List<ReservedRoom> resRms)
    {
       Console.WriteLine("\n Check-Out Menu");
       Console.WriteLine("Enter Room Number: ");
       int roomNumber = MethodHelper.ValRoomNumber();
-
-      while (!int.TryParse(Console.ReadLine()?.Trim(), out roomNumber))
-      {
-         Console.WriteLine("Invalid Room Number\n>>>Please enter a valid room number");
-      }
 
       while (!resRms.Exists(r => r.RoomNumber == roomNumber))
       {
@@ -210,11 +211,9 @@ public class Service
       }
    }
 
-   public static void LogOut()
+   public static void LogOut(DBConnect conn)
    {
-      Console.WriteLine("LogOut");
-
-
-
+      conn.CloseConnection();
+      Console.WriteLine("Log out successful!");
    }
 }
