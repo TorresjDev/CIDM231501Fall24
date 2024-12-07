@@ -18,3 +18,6 @@
 *.config
 
 .fake
+
+Notes.cs
+Notes.txt
