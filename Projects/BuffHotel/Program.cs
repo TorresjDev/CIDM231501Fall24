@@ -1,5 +1,5 @@
 ﻿using Utilities; // Add this line to include the Room class
-
+using BuffHotel.Controllers;
 
 namespace BuffHotel;
 
@@ -21,29 +21,29 @@ class Program
         {
             Console.WriteLine("Try again? (Y/N)");
             string? tryAgain = Console.ReadLine()?.Trim().ToLower();
-            if (tryAgain == "n")
+
+            switch (tryAgain)
             {
-                Console.WriteLine("Thank you for stopping by, \n Goodbye!");
-                break;
-            }
-            else if (tryAgain == "y")
-            {
-                loggedIn = MethodHelper.Login(username, password);
+                case "n":
+                    Console.WriteLine("Thank you for stopping by, \n Goodbye!");
+                    return;
+                case "y":
+                    loggedIn = MethodHelper.Login(username, password);
+                    break;
+                default:
+                    Console.WriteLine("Invalid option");
+                    break;
             }
         }
 
-        if (loggedIn)
+        Console.WriteLine("Connecting to the database...");
+        HotelController controller = new HotelController(db_conn);
+        if (!db_conn.EnsureConnection())
         {
-            // db_conn = new DBConnect();
-            Console.WriteLine("Connecting to the database...");
-            bool connected = db_conn.OpenConnection();
-            if (!connected)
-            {
-                Console.WriteLine("Error: Unable to connect to the database");
-                Console.WriteLine("Goodbye!");
-                return;
-            }
-            MethodHelper.MainMenu(db_conn);
+            Console.WriteLine("Error: Unable to connect to the database");
+            Console.WriteLine("Goodbye!");
+            return;
         }
+        controller.MainMenu();
     }
 }

@@ -1,5 +1,5 @@
 /* Reservations table
-   * Reservations Table is used to store the details of the reservations made by customers.
+   * Used to store the details of the room and reservations made by customers.
 */
 CREATE TABLE Reservations(
    ReservationId INT AUTO_INCREMENT PRIMARY KEY COMMENT 'PRIMARY KEY',
@@ -12,9 +12,9 @@ CREATE TABLE Reservations(
 ) COMMENT 'Hotel Reservations Table';
 
 /* Store Procedure CreateReservation 
-   * It inserts the customer details into the Customers table.
-   * It inserts the reservation details into the Reservations table.
-   * It updates the room status to Reserved in the Rooms table.
+   * Inserts customer details into Customers table.
+   * Inserts reservation details into Reservations table.
+   * Updates room status to Reserved in Rooms table.
    */
 CREATE PROCEDURE CreateReservation(
    IN p_RoomNumber INT,
@@ -22,20 +22,43 @@ CREATE PROCEDURE CreateReservation(
    IN p_CustomerEmail VARCHAR(75)
 )
 /*
-   CALL CreateReservation(222, 'John Doe', 'joe2@mail.com');
+   CALL CreateReservation(101, 'John Doe', 'joe2@mail.com');
 */
 BEGIN
    DECLARE customerId INT;
-   INSERT INTO Customers (Name, Email) VALUES (p_CustomerName, p_CustomerEmail);
+   INSERT INTO Customers (Name, Email) 
+      VALUES (p_CustomerName, p_CustomerEmail);
    SET customerId = LAST_INSERT_ID(); --LAST_INSERT_ID is a MySQL function that returns the last auto-incremented column value which is the customerId
-   INSERT INTO Reservations (RoomNumber, CustomerId) VALUES (p_RoomNumber, customerId);
-   UPDATE Rooms SET IsAvailable = FALSE WHERE RoomNumber = p_RoomNumber;
-END //
+   INSERT INTO Reservations (RoomNumber, CustomerId, CheckInDate) 
+      VALUES (p_RoomNumber, customerId, CURRENT_TIMESTAMP);
+   UPDATE Rooms SET IsAvailable = FALSE 
+      WHERE RoomNumber = p_RoomNumber;
+END
+
+/* Store Procedure GetAllReservations
+   * Return all reservation details.
+   */
+CREATE PROCEDURE GetAllReservations()
+/*
+   CALL GetAllReservations();
+*/
+BEGIN
+   SELECT
+      res.ReservationId,
+      r.RoomNumber,
+      c.Name AS CustomerName,
+      res.Status,
+      res.CheckInDate
+   FROM
+      Reservations AS res
+   JOIN
+      Rooms AS r ON res.RoomNumber = r.RoomNumber
+   JOIN
+      Customers AS c ON res.CustomerId = c.CustomerId;
+END
 
 /* Store Procedure GetReservedRoomsByActive
-   * It returns the room number and the customer name of the customer who has reserved the room.
-   * It joins the Reservations, Rooms, and Customers tables to get the required data.
-   * It filters the rooms that are not available (IsAvailable = FALSE) and have an active reservation (Status = 'Active').
+   * Return room details of reserved rooms with active status.
    */
 CREATE PROCEDURE GetReservedRoomsByActive()
 /*
@@ -57,15 +80,13 @@ BEGIN
 END
 
 /* Store Procedure GetReservedRoomById
-   * It returns the room number and the customer name of the customer who has reserved the room by RoomNumber.
-   * It joins the Reservations, Rooms, and Customers tables to get the required data.
-   * It filters the rooms that are not available (IsAvailable = FALSE) and have an active reservation (Status = 'Active').
+   * Return room details of reserved room by RoomNumber.
    */
 CREATE PROCEDURE GetReservedRoomById(
    IN p_RoomNumber INT
 )
 /*
-   CALL GetReservedRoomById(222);
+   CALL GetReservedRoomById(101);
 */
 BEGIN 
    SELECT
@@ -85,16 +106,25 @@ BEGIN
 END
 
 /* Store Procedure CheckOutReservation
-   * It updates the reservation status to 'Completed' in the Reservations table.
-   * It updates the room status to 'Available' in the Rooms table.
+   * Updates reservation status to Completed.
    */
 CREATE PROCEDURE CheckOutReservation(
    IN p_RoomNumber INT    
 )
 /*
-   CALL CheckOutReservation(222);
+   CALL CheckOutReservation(101);
 */
 BEGIN 
-   UPDATE Reservations SET Status = 'Completed' WHERE RoomNumber = p_RoomNumber;
-   UPDATE Rooms SET IsAvailable = TRUE WHERE RoomNumber = p_RoomNumber;
+   UPDATE Reservations 
+      SET 
+         Status = 'Completed',
+         CheckOutDate = CURRENT_TIMESTAMP
+      WHERE RoomNumber = p_RoomNumber;
+         UPDATE Rooms 
+            SET IsAvailable = TRUE 
+         WHERE RoomNumber = p_RoomNumber;
 END 
+-- Reset the auto-increment value for the Reservations table
+ALTER TABLE Reservations AUTO_INCREMENT = 1;
+-- Delete all data from the Reservations table
+TRUNCATE TABLE Reservations;

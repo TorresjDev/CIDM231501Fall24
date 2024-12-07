@@ -1,13 +1,16 @@
+using System.Globalization;
 using BuffHotel.Models;
 
 namespace Utilities
 {
    public class MethodHelper
    {
+      // Login method is used to validate user login credentials.
       public static bool Login(string uName, string pWord)
       {
          Console.WriteLine("Enter Username: ");
          string? username = Console.ReadLine()?.Trim().ToLower();
+
          Console.WriteLine("Enter Password: ");
          string? password = Console.ReadLine()?.Trim().ToLower();
 
@@ -29,64 +32,62 @@ namespace Utilities
             return false;
          }
       }
-      public static void MainMenu(DBConnect conn)
+
+      // ValNumber method is used to validate user input for room number.
+      public static int ValNumber(string header)
       {
-         string? option = string.Empty;
-         List<AvailableRoom> avbRooms = new List<AvailableRoom>();
-         List<ReservedRoom> resRooms = new List<ReservedRoom>();
-
-         if (avbRooms.Count == 0 && resRooms.Count == 0)
+         int rmNum;
+         while (!int.TryParse(Console.ReadLine()?.Trim(), out rmNum))
          {
-            avbRooms = Service.GetAvRooms(conn);
-            resRooms = Service.GetResRooms(conn);
+            Console.WriteLine($"Invalid {header} Number\n\n>>>Please enter a valid {header} number ");
          }
-
-         do
-         {
-            Console.WriteLine("\n***********************************************");
-            Console.WriteLine("---> Please select a # option from the menu <---");
-            Console.WriteLine(" 1. Show Available Rooms");
-            Console.WriteLine(" 2. Check-In");
-            Console.WriteLine(" 3. Show Reserved Rooms");
-            Console.WriteLine(" 4. Check-Out");
-            Console.WriteLine(" 5. Log Out");
-            Console.WriteLine("***********************************************");
-            option = Console.ReadLine()?.Trim();
-
-            switch (option)
-            {
-               case "1":
-                  Service.FilterAvailableRooms(avbRooms);
-                  break;
-               case "2":
-                  Service.CheckIn(conn, avbRooms);
-                  break;
-               case "3":
-                  Service.FilterReservedRooms(resRooms);
-                  break;
-               case "4":
-                  Service.CheckOut(conn, resRooms);
-                  break;
-               case "5":
-                  Service.LogOut(conn);
-                  break;
-               default:
-                  Console.WriteLine("\nInvalid Option");
-                  Console.WriteLine(">>> Press any key to return to the main menu...");
-                  Console.ReadKey();
-                  break;
-            }
-         } while (option != "5");
+         return rmNum;
       }
 
-      public static int ValRoomNumber()
+
+      // FilterReservations method is used to filter reserved rooms from the list of reservations.
+      public static void FilterReservationsByStatus(List<Reservation> rsv, string header, string status)
       {
-         int roomNumber;
-         while (!int.TryParse(Console.ReadLine()?.Trim(), out roomNumber))
+
+         if (rsv.Count == 0 || rsv == null)
          {
-            Console.WriteLine("Invalid Room Number\n\n>>>Please enter a valid room number");
+            Console.WriteLine($"Sorry, no {header} at the moment");
+            return;
          }
-         return roomNumber;
+
+         int count = 0;
+         Console.WriteLine($"\n<-------{header}------->");
+         var filteredReservations = rsv.Where(r => r.Status == status);
+         foreach (Reservation resv in filteredReservations)
+         {
+            if (resv.Status == "Completed")
+            {
+               Console.WriteLine($"+ Room #:{resv.RoomNumber} | Customer:{resv.CustomerName} - Check-In:{resv.CheckInDate} - Check-Out:{resv.CheckOutDate}");
+               count++;
+            }
+            else
+            {
+               Console.WriteLine($"+ Room #:{resv.RoomNumber} | Customer:{resv.CustomerName} - Check-In:{resv.CheckInDate} ");
+               count++;
+            }
+         }
+         Console.WriteLine($"Number of {header}: {count}");
+      }
+
+      // FilterRoomsByStatus method is used to filter rooms based on status.
+      public static void FilterRoomsByStatus(List<Room> rm, string header, bool status)
+      {
+         Console.WriteLine($"\n<-------{header}------->");
+         int count = 0;
+
+         var filteredRooms = rm.Where(r => r.Status == status);
+         foreach (var room in filteredRooms)
+         {
+            Console.WriteLine($"+ Room #:{room.RoomNumber} Capacity:{room.Capacity}");
+            count++;
+         }
+         Console.WriteLine($"Number of {header}: {count}");
+
       }
    }
 }

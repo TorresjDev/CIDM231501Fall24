@@ -1,5 +1,5 @@
 /* Customers table
-   * Customers Table is used to store the details of the customers who have made reservations.
+   * Used to store the details of the customers who have made reservations.
 */
 CREATE TABLE Customers (
    CustomerId INT AUTO_INCREMENT PRIMARY KEY COMMENT 'PRIMARY KEY',

@@ -1,17 +1,11 @@
 namespace BuffHotel.Models
 {
-   // Represents a model of a room that is available for reservation
-   public class AvailableRoom
+
+   // Represents a model replica of the Room table in the database.
+   public class Room
    {
       public int RoomNumber { get; set; }
       public int Capacity { get; set; }
+      public bool Status { get; set; }
    }
-
-   // Represents a model of a room that is reserved by a customer
-   public class ReservedRoom
-   {
-      public int RoomNumber { get; set; }
-      public required string CustomerName { get; set; } //using required to satisfy the non-nullable reference type
-   }
-
 }
