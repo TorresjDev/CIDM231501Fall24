@@ -57,54 +57,6 @@ BEGIN
       Customers AS c ON res.CustomerId = c.CustomerId;
 END
 
-/* Store Procedure GetReservedRoomsByActive
-   * Return room details of reserved rooms with active status.
-   */
-CREATE PROCEDURE GetReservedRoomsByActive()
-/*
-   CALL GetReservedRoomsByActive();
-*/
-BEGIN
-      SELECT
-         r.RoomNumber,
-         c.Name AS CustomerName
-      FROM
-         Reservations AS res
-      JOIN
-         Rooms AS r ON res.RoomNumber = r.RoomNumber
-      JOIN
-         Customers AS c ON res.CustomerId = c.CustomerId
-      WHERE
-         r.IsAvailable = FALSE
-         AND res.Status = 'Active';
-END
-
-/* Store Procedure GetReservedRoomById
-   * Return room details of reserved room by RoomNumber.
-   */
-CREATE PROCEDURE GetReservedRoomById(
-   IN p_RoomNumber INT
-)
-/*
-   CALL GetReservedRoomById(101);
-*/
-BEGIN 
-   SELECT
-      r.RoomNumber,
-      cust.Name as CustomerName
-      
-   FROM
-      Reservations AS res
-   JOIN
-      Rooms AS r ON res.RoomNumber = p_RoomNumber
-   JOIN
-      Customers AS cust ON res.CustomerId = cust.CustomerId 
-   WHERE 
-      r.RoomNumber = p_RoomNumber
-   AND 
-      res.Status = 'Active';
-END
-
 /* Store Procedure CheckOutReservation
    * Updates reservation status to Completed.
    */
